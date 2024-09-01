@@ -1,33 +1,49 @@
-// This file: 
-// Creates a basic Express server using TypeScript
-// Sets up a route to handle incoming sensor data
-
-import express, { Request, Response } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
 import fs from 'fs';
 import path from 'path';
+import { SerialPort } from 'serialport';
+import { ReadlineParser } from '@serialport/parser-readline';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
+// Set up the serial port connection
+// HAVE TO BE CHANGED TO SUIT YOUR OWN ARDUINO :)
+const portName = '/dev/cu.usbmodem111301'; // Replace with your Arduino's serial port name
+const baudRate = 115200; // Match this to your Arduino's baud rate
 
-app.post('/api/sensordata', (req: Request, res: Response) => {
-  const { data } = req.body;
+const port = new SerialPort({
+  path: portName,
+  baudRate: baudRate,
+});
+
+const parser = port.pipe(new ReadlineParser({ delimiter: '\n' }));
+
+// Create directory if it doesn't exist
+const logDir = path.join(__dirname, 'logs');
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir);
+}
+
+// When data is received from the Arduino
+parser.on('data', (data: string) => {
   const timestamp = new Date().toISOString();
-  const log = `${timestamp}: ${data}\n`;
+  const log = `${timestamp}: ${data.trim()}\n`;
 
-  const logFilePath = path.join(__dirname, 'sensorData.txt');
-  
+  const logFilePath = path.join(logDir, 'sensorData.txt');
+
   fs.appendFile(logFilePath, log, (err) => {
     if (err) {
       console.error('Error writing to file', err);
-      res.status(500).send('Server error');
     } else {
-      res.status(200).send('Data received');
+      console.log(`Data logged: ${log}`);
     }
   });
 });
+
+// Express setup
+app.use(bodyParser.json());
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
