@@ -11,27 +11,27 @@ const tempDesc = "Your temperature is within the normal range of 36-37.5C"
 const flowRateDesc = "Your flow rate is within the normal range of 70-100%"
 
 // Stats for Summary Cards
-const batteryLife = "92%"
+const batteryLife = "93%"
 const heartRate = "72 BMP"
 const bloodOx = "95%"
-const bloodPress = "120/80 \nHg"
+const bloodPress = "120/80"
 const temp = "36C"
 const flowRate = "20%"
 // TODO: Write functions for data formatting -> Turning raw data from sensors into formatted strings
 
-export default function Home() {
+export default function Home({ navigation }) {
     return (
         <>
             <View style={styles.statusBar}>
                 <Text>TODO: Status Bar</Text>
             </View>
             <View style={styles.outerContainer}>
-                <SummaryCard title="Battery Life" description={batteryLifeDesc} stat={batteryLife}></SummaryCard>
-                <SummaryCard title="Heart Rate" description={heartRateDesc} stat={heartRate}></SummaryCard>
-                <SummaryCard title="Blood Oxygen" description={bloodOxDesc} stat={bloodOx}></SummaryCard>
-                <SummaryCard title="Blood Pressure" description={bloodPressDesc} stat={bloodPress}></SummaryCard>
-                <SummaryCard title="Temperature" description={tempDesc} stat={temp}></SummaryCard>
-                <SummaryCard title="Flow Rate" description={flowRateDesc} stat={flowRate}></SummaryCard>
+                <SummaryCard title="Battery Life" description={batteryLifeDesc} stat={batteryLife} navigation={navigation}></SummaryCard>
+                <SummaryCard title="Heart Rate" description={heartRateDesc} stat={heartRate} navigation={navigation}></SummaryCard>
+                <SummaryCard title="Blood Oxygen" description={bloodOxDesc} stat={bloodOx} navigation={navigation}></SummaryCard>
+                <SummaryCard title="Blood Pressure" description={bloodPressDesc} stat={bloodPress} navigation={navigation}></SummaryCard>
+                <SummaryCard title="Temperature" description={tempDesc} stat={temp} navigation={navigation}></SummaryCard>
+                <SummaryCard title="Flow Rate" description={flowRateDesc} stat={flowRate} navigation={navigation}></SummaryCard>
             </View>
         </>
     );
