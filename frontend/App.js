@@ -15,6 +15,7 @@ import Home from './pages/Home';
 import Appts from './pages/Appts';
 import Browse from './pages/Browse';
 import Details from './pages/Details';
+import Categories from "./pages/Categories";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,9 +26,18 @@ function HomeStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Summary" component={Home}/>
-      <Stack.Screen name="Details" component={Details} />
+      <Stack.Screen name="Details" component={Details}/>
     </Stack.Navigator>
   );
+}
+
+function BrowseStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="TAH Categories" component={Browse}/>
+      <Stack.Screen name="Categories" component={Categories}/>
+    </Stack.Navigator>
+  )
 }
 
 function MainTabs() {
@@ -52,7 +62,7 @@ function MainTabs() {
     >
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Appointments" component={Appts} />
-      <Tab.Screen name="Browse" component={Browse} />
+      <Tab.Screen name="Browse" component={BrowseStack} />
     </Tab.Navigator>
   );
 }
