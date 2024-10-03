@@ -23,7 +23,7 @@ export default function Home({ navigation }) {
     return (
         <>
             <View style={styles.statusBar}>
-                <Text>TODO: Status Bar</Text>
+                {/* <Text>TODO: Status Bar</Text> */}
             </View>
             <View style={styles.outerContainer}>
                 <SummaryCard title="Battery Life" description={batteryLifeDesc} stat={batteryLife} navigation={navigation}></SummaryCard>
